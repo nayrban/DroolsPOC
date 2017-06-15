@@ -1,0 +1,37 @@
+package com.gps.hc.poc;
+
+import com.gps.hc.poc.dto.RemoteSalesTax;
+
+
+rule "If SiteId==AUSTIN-TX"
+
+    when
+       site:RemoteSalesTax( siteId == "AUSTIN-TX" )
+    then
+        site.setSalesTax(8.250);
+end
+
+rule "If SiteId==SANANTONIO-TX"
+     when
+       site:RemoteSalesTax( siteId == "SANANTONIO-TX" )
+    then
+        site.setSalesTax(8.250);
+end
+
+
+rule "If SiteId==NYC-NY"
+     when
+       site:RemoteSalesTax( siteId == "NYC-NY" )
+    then
+        site.setSalesTax(8.875);
+
+end
+
+
+rule "If SiteId==ORLANDO-FL"
+     when
+       site:RemoteSalesTax( siteId == "ORLANDO-FL" )
+    then
+        site.setSalesTax(6.500);
+
+end

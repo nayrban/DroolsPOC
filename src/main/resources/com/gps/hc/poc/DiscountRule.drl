@@ -1,0 +1,39 @@
+package com.gps.hc.poc;
+
+import com.gps.hc.poc.dto.RemoteTransactionDiscount;
+
+
+rule "If CouponId==XMAS"
+dialect "java"
+    when
+       	discount:RemoteTransactionDiscount( couponId  == "XMAS" )
+    then
+        discount.setTotalDiscount(2);        
+end
+
+rule "If CouponId==NEW YEAR"
+dialect "java"
+    when
+       	discount:RemoteTransactionDiscount( couponId  == "NEW YEAR" )
+    then
+        discount.setTotalDiscount(8);        
+end
+
+
+rule "If CouponId==FIRST TIME"
+dialect "java"
+    when
+    	discount:RemoteTransactionDiscount( couponId  == "FIRST TIME" )
+    then
+        discount.setTotalDiscount(5);        
+
+end
+
+rule "If CouponId==BLACK FRIDAY"
+dialect "java"
+    when
+       	discount:RemoteTransactionDiscount( couponId  == "BLACK FRIDAY" )
+    then
+        discount.setTotalDiscount(20);        
+end
+

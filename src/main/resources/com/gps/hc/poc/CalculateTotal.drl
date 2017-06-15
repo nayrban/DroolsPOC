@@ -1,0 +1,62 @@
+package com.gps.hc.poc;
+
+import com.gps.hc.poc.dto.RemoteCart;
+import com.gps.hc.poc.dto.CartItem;
+import java.util.*;
+
+
+rule "Total for AUSTIN-Tx"
+    when
+       cartRequest:RemoteCart( siteId == "AUSTIN-TX" );              
+    then    	
+        cartRequest = calculatePrice(cartRequest);      
+
+end
+
+rule "Total for SANANTONIO-Tx"
+    when
+       cartRequest:RemoteCart( siteId == "SANANTONIO-TX" );              
+    then    	
+        cartRequest = calculatePrice(cartRequest);       
+
+end
+
+rule "Total for NYC-NY"
+    when
+       cartRequest:RemoteCart( siteId == "NYC-NY" );              
+    then    	
+        cartRequest = calculatePrice(cartRequest);         
+
+end
+
+rule "Total for ORLANDO-FL"
+    when
+       cartRequest:RemoteCart( siteId == "ORLANDO-FL" );              
+    then    	
+        cartRequest = calculatePrice(cartRequest);  
+
+end
+
+function RemoteCart calculatePrice(RemoteCart cartRequest){
+	double discount = cartRequest.getCouponDiscountValue();
+	double salesTax = cartRequest.getSalesTaxValue();
+	Double price = 0.0;    	
+	List<CartItem> items = cartRequest.getItems();
+	for(CartItem item : items){
+		price = price + (item.getTotal() * item.getPrice());
+	}    
+			
+	price -= percetage(price, discount);    	
+	
+	price += percetage(price, salesTax);
+	
+	cartRequest.setTotalPrice(price);        
+	cartRequest.setTotalDiscount(discount + "%");
+	cartRequest.setSalesTax(salesTax + "%");  
+	return cartRequest;
+}
+
+function double percetage(double price, double value){
+	return (price * value) / 100;
+}
+
